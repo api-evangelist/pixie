@@ -1,0 +1,14 @@
+name: Pixie
+description: Kubernetes observability platform that uses eBPF to automatically collect
+  telemetry data including full-body application requests, resource and network metrics,
+  and application profiles without manual instrumentation.
+url: https://px.dev/
+tags:
+- Observability
+- Kubernetes
+- Monitoring
+- eBPF
+created: '2025'
+modified: '2025'
+apis: []
+common: []
