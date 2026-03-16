@@ -1,14 +1,45 @@
+aid: pixie
 name: Pixie
-description: Kubernetes observability platform that uses eBPF to automatically collect
-  telemetry data including full-body application requests, resource and network metrics,
-  and application profiles without manual instrumentation.
-url: https://px.dev/
+description: >-
+  Pixie is a Kubernetes observability platform that uses eBPF to automatically
+  collect telemetry data including full-body application requests, resource and
+  network metrics, and application profiles without manual instrumentation.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Observability
-- Kubernetes
-- Monitoring
-- eBPF
-created: '2025'
-modified: '2025'
-apis: []
-common: []
+  - Observability
+  - Kubernetes
+  - Monitoring
+  - eBPF
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml
+created: '2026-03-16'
+modified: '2026-03-16'
+specificationVersion: '0.19'
+apis:
+  - aid: pixie:pixie
+    name: Pixie API
+    description: >-
+      Kubernetes observability platform using eBPF for automatic telemetry
+      collection without manual instrumentation.
+    humanURL: https://docs.px.dev/
+    tags:
+      - Observability
+      - Kubernetes
+    properties:
+      - type: Documentation
+        url: https://docs.px.dev/
+      - type: Getting Started
+        url: https://docs.px.dev/installing-pixie/
+common:
+  - type: Website
+    url: https://px.dev/
+  - type: Documentation
+    url: https://docs.px.dev/
+  - type: GitHub Organization
+    url: https://github.com/pixie-io/pixie
+  - type: Community
+    url: https://slackin.px.dev/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
