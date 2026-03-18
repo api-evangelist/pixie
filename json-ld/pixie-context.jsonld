@@ -1,0 +1,145 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "pixie": "https://px.dev/vocabulary#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "ssn": "http://www.w3.org/ns/ssn/",
+    "sosa": "http://www.w3.org/ns/sosa/",
+
+    "Cluster": {
+      "@id": "pixie:Cluster",
+      "@context": {
+        "id": "@id",
+        "clusterName": "schema:name",
+        "clusterUID": "pixie:clusterUID",
+        "clusterVersion": "schema:softwareVersion",
+        "status": "pixie:clusterStatus",
+        "vizierVersion": "pixie:vizierVersion",
+        "numNodes": "pixie:nodeCount",
+        "numInstrumentedNodes": "pixie:instrumentedNodeCount",
+        "lastHeartbeatNs": {
+          "@id": "pixie:lastHeartbeat",
+          "@type": "xsd:long"
+        },
+        "prettyClusterName": "schema:alternateName"
+      }
+    },
+
+    "PxLScript": {
+      "@id": "pixie:PxLScript",
+      "@context": {
+        "id": "@id",
+        "name": "schema:name",
+        "description": "schema:description",
+        "pxl": "pixie:scriptSource",
+        "args": {
+          "@id": "pixie:scriptArguments",
+          "@container": "@set"
+        },
+        "hidden": "pixie:isHidden",
+        "orgID": {
+          "@id": "pixie:organization",
+          "@type": "@id"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "ScriptArg": {
+      "@id": "pixie:ScriptArgument",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "defaultValue": "schema:defaultValue",
+        "semantic_type": "pixie:semanticType",
+        "validValues": {
+          "@id": "schema:suggestedAnswer",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "RetentionScript": {
+      "@id": "pixie:RetentionScript",
+      "@context": {
+        "id": "@id",
+        "script_name": "schema:name",
+        "description": "schema:description",
+        "script": "pixie:scriptSource",
+        "frequency_s": {
+          "@id": "schema:repeatFrequency",
+          "@type": "xsd:integer"
+        },
+        "enabled": "pixie:isEnabled",
+        "plugin_id": {
+          "@id": "pixie:plugin",
+          "@type": "@id"
+        },
+        "export_url": {
+          "@id": "pixie:exportEndpoint",
+          "@type": "@id"
+        },
+        "cluster_ids": {
+          "@id": "pixie:targetClusters",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Plugin": {
+      "@id": "pixie:Plugin",
+      "@context": {
+        "plugin_id": "@id",
+        "enabled": "pixie:isEnabled",
+        "version": "schema:version",
+        "customExportURL": {
+          "@id": "pixie:exportEndpoint",
+          "@type": "@id"
+        },
+        "retention_scripts": {
+          "@id": "pixie:retentionScripts",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "ResultTable": {
+      "@id": "pixie:ResultTable",
+      "@context": {
+        "name": "schema:name",
+        "relation": "pixie:tableSchema",
+        "data": {
+          "@id": "pixie:rowData",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Observation": {
+      "@id": "sosa:Observation",
+      "@context": {
+        "timestamp": {
+          "@id": "sosa:resultTime",
+          "@type": "xsd:dateTime"
+        },
+        "service": {
+          "@id": "schema:name",
+          "@type": "@id"
+        },
+        "namespace": "pixie:kubernetesNamespace",
+        "pod": "pixie:kubernetesPod",
+        "node": "pixie:kubernetesNode"
+      }
+    }
+  }
+}

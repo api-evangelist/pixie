@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.px.dev/schemas/pxl-script.json",
+  "title": "Pixie PxL Script",
+  "description": "Schema representing a Pixie PxL script definition including its source code, arguments, and execution metadata. PxL is a Python-dialect domain-specific language for querying eBPF-collected telemetry data in Kubernetes clusters.",
+  "type": "object",
+  "required": ["pxl"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the PxL script."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the PxL script.",
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what the script does and what telemetry data it queries."
+    },
+    "pxl": {
+      "type": "string",
+      "description": "Source code of the PxL script. Must be valid PxL, a Python-dialect DSL. Scripts typically import the px module, create DataFrames from Pixie tables, apply filters and aggregations, and call px.display() to output results.",
+      "minLength": 1
+    },
+    "vis": {
+      "$ref": "#/$defs/VisSpec",
+      "description": "Optional visualization specification describing how to render the script's output in the Pixie UI."
+    },
+    "args": {
+      "type": "array",
+      "description": "List of argument definitions for parameterizing the script.",
+      "items": {
+        "$ref": "#/$defs/ScriptArg"
+      }
+    },
+    "hidden": {
+      "type": "boolean",
+      "description": "If true, the script is hidden from the Pixie Live UI script selector."
+    },
+    "orgID": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identifier of the organization that owns this script."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the script was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the script was last updated."
+    }
+  },
+  "$defs": {
+    "ScriptArg": {
+      "type": "object",
+      "description": "An argument definition for a parameterized PxL script, enabling scripts to accept runtime input values.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the argument, matching the parameter name in the PxL script function signature."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what this argument controls."
+        },
+        "defaultValue": {
+          "type": "string",
+          "description": "Default value for this argument when not provided by the caller."
+        },
+        "validValues": {
+          "type": "array",
+          "description": "Optional list of valid values for this argument, used to populate dropdowns in the UI.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "semantic_type": {
+          "type": "string",
+          "description": "Semantic type hint for argument rendering in the Pixie Live UI.",
+          "enum": [
+            "ST_NONE",
+            "ST_SERVICE_NAME",
+            "ST_POD_NAME",
+            "ST_POD_PHASE",
+            "ST_NODE_NAME",
+            "ST_NAMESPACE_NAME",
+            "ST_SCRIPT_REFERENCE",
+            "ST_DURATION_NS",
+            "ST_BYTES",
+            "ST_PERCENT",
+            "ST_THROUGHPUT_PER_NS",
+            "ST_THROUGHPUT_BYTES_PER_NS",
+            "ST_QUANTILES",
+            "ST_IP_ADDRESS",
+            "ST_PORT",
+            "ST_HTTP_RESP_STATUS",
+            "ST_HTTP_RESP_MESSAGE",
+            "ST_HTTP_REQ_METHOD",
+            "ST_HTTP_CONTENT_TYPE"
+          ]
+        }
+      }
+    },
+    "VisSpec": {
+      "type": "object",
+      "description": "Visualization specification defining how to render a PxL script's output in the Pixie Live UI.",
+      "properties": {
+        "variables": {
+          "type": "array",
+          "description": "Variable definitions for the visualization, bound to script arguments.",
+          "items": {
+            "$ref": "#/$defs/VisVariable"
+          }
+        },
+        "widgets": {
+          "type": "array",
+          "description": "Widget definitions describing how each output table should be visualized.",
+          "items": {
+            "$ref": "#/$defs/VisWidget"
+          }
+        },
+        "globalFuncOutputName": {
+          "type": "string",
+          "description": "Name of the global function to call when the visualization renders."
+        }
+      }
+    },
+    "VisVariable": {
+      "type": "object",
+      "description": "A variable in the visualization spec, binding a UI control to a PxL script argument.",
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the variable, matching a PxL script argument name."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of the variable controlling which UI widget is rendered.",
+          "enum": [
+            "PX_STRING",
+            "PX_STRINGLIST",
+            "PX_BOOL",
+            "PX_INT64",
+            "PX_FLOAT64",
+            "PX_SERVICE",
+            "PX_POD",
+            "PX_NODE",
+            "PX_NAMESPACE",
+            "PX_DURATION_NS",
+            "PX_LIST"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "Description displayed in the UI for this variable."
+        },
+        "defaultValue": {
+          "type": "string",
+          "description": "Default value for the variable."
+        }
+      }
+    },
+    "VisWidget": {
+      "type": "object",
+      "description": "A visualization widget displaying PxL script output in the Pixie Live UI.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the widget, used as a label in the UI."
+        },
+        "position": {
+          "$ref": "#/$defs/WidgetPosition"
+        },
+        "func": {
+          "$ref": "#/$defs/WidgetFunc"
+        },
+        "displaySpec": {
+          "$ref": "#/$defs/DisplaySpec"
+        }
+      }
+    },
+    "WidgetPosition": {
+      "type": "object",
+      "description": "Position and dimensions of a widget in the dashboard grid layout.",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "description": "Horizontal position in grid columns.",
+          "minimum": 0
+        },
+        "y": {
+          "type": "integer",
+          "description": "Vertical position in grid rows.",
+          "minimum": 0
+        },
+        "w": {
+          "type": "integer",
+          "description": "Width in grid columns.",
+          "minimum": 1
+        },
+        "h": {
+          "type": "integer",
+          "description": "Height in grid rows.",
+          "minimum": 1
+        }
+      }
+    },
+    "WidgetFunc": {
+      "type": "object",
+      "description": "Reference to a PxL function that produces data for this widget.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the PxL function to call."
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments to pass to the PxL function, bound to visualization variables.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Argument name matching the PxL function parameter."
+              },
+              "variable": {
+                "type": "string",
+                "description": "Name of the visualization variable to bind to this argument."
+              },
+              "value": {
+                "type": "string",
+                "description": "Literal value for this argument."
+              }
+            }
+          }
+        }
+      }
+    },
+    "DisplaySpec": {
+      "type": "object",
+      "description": "Display configuration for a visualization widget specifying chart type and axes.",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "description": "Protobuf type URL identifying the display specification type.",
+          "examples": [
+            "types.px.dev/px.vispb.TimeseriesChart",
+            "types.px.dev/px.vispb.BarChart",
+            "types.px.dev/px.vispb.Table",
+            "types.px.dev/px.vispb.StatChart",
+            "types.px.dev/px.vispb.ScatterPlotChart"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "description": "Chart title displayed in the UI."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "name": "HTTP Overview",
+      "description": "Shows an overview of HTTP traffic in the cluster including request rates, latency, and error rates.",
+      "pxl": "import px\ndf = px.DataFrame(table='http_events', start_time='-5m')\ndf = df[['time_', 'upid', 'req_path', 'req_method', 'resp_status', 'resp_latency_ns']]\npx.display(df, 'http_events')",
+      "args": [
+        {
+          "name": "start_time",
+          "description": "Start time for the query window.",
+          "defaultValue": "-5m",
+          "semantic_type": "ST_DURATION_NS"
+        }
+      ]
+    }
+  ]
+}

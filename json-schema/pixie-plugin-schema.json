@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.px.dev/schemas/plugin.json",
+  "title": "Pixie Plugin Configuration",
+  "description": "Schema for configuring a Pixie plugin that exports observability data from Pixie at scheduled intervals to external systems. Plugins pair PxL export scripts with a retention plugin backend such as an OpenTelemetry collector or Grafana datasource.",
+  "type": "object",
+  "required": ["plugin_id", "enabled"],
+  "properties": {
+    "plugin_id": {
+      "type": "string",
+      "description": "Unique identifier of the plugin to configure, such as 'grafana' or 'open-telemetry'.",
+      "examples": ["grafana", "open-telemetry", "datadog", "newrelic"]
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the plugin is enabled for this cluster."
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the plugin to use."
+    },
+    "config_json": {
+      "type": "string",
+      "description": "JSON-encoded plugin-specific configuration. Contents vary by plugin type. For OpenTelemetry, this includes the collector endpoint; for Grafana, the datasource URL."
+    },
+    "customExportURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Custom URL for exporting data when using a self-hosted or custom endpoint."
+    },
+    "insecureTLS": {
+      "type": "boolean",
+      "description": "If true, TLS certificate validation is skipped when connecting to the export endpoint. Not recommended for production."
+    },
+    "retention_scripts": {
+      "type": "array",
+      "description": "List of PxL retention script configurations defining what data to export and at what frequency.",
+      "items": {
+        "$ref": "#/$defs/RetentionScript"
+      }
+    }
+  },
+  "$defs": {
+    "RetentionScript": {
+      "type": "object",
+      "description": "Configuration for a PxL script that periodically exports Pixie telemetry data to the plugin backend.",
+      "required": ["script_name", "script", "frequency_s"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier of the retention script."
+        },
+        "script_name": {
+          "type": "string",
+          "description": "Human-readable name of the retention script.",
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what data this script exports."
+        },
+        "script": {
+          "type": "string",
+          "description": "PxL source code for the export script. The script should use px.export() to send data to the configured plugin endpoint rather than px.display().",
+          "minLength": 1
+        },
+        "frequency_s": {
+          "type": "integer",
+          "description": "How often the script is executed in seconds. Controls the export cadence for this data stream.",
+          "minimum": 10,
+          "maximum": 86400
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether this retention script is active and exporting data."
+        },
+        "cluster_ids": {
+          "type": "array",
+          "description": "List of cluster IDs to run this script on. If empty, the script runs on all clusters.",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "plugin_id": {
+          "type": "string",
+          "description": "Identifier of the plugin this script exports data to."
+        },
+        "export_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Endpoint URL where the script sends exported data."
+        },
+        "custom_export_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Override export URL for this specific script."
+        },
+        "is_preset": {
+          "type": "boolean",
+          "description": "If true, this script is a built-in preset provided by the plugin, not a user-defined script."
+        }
+      }
+    },
+    "OpenTelemetryConfig": {
+      "type": "object",
+      "description": "Configuration for the OpenTelemetry export plugin.",
+      "required": ["endpoint"],
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "description": "OTLP gRPC or HTTP endpoint for sending telemetry data."
+        },
+        "headers": {
+          "type": "object",
+          "description": "Additional HTTP headers to include with export requests, such as authentication tokens.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "insecure": {
+          "type": "boolean",
+          "description": "If true, sends data over an unencrypted connection."
+        }
+      }
+    },
+    "GrafanaConfig": {
+      "type": "object",
+      "description": "Configuration for the Grafana plugin that exposes Pixie data as a Grafana datasource.",
+      "properties": {
+        "grafana_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the Grafana instance to connect to."
+        },
+        "grafana_api_key": {
+          "type": "string",
+          "description": "Grafana API key with datasource write permission."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "plugin_id": "open-telemetry",
+      "enabled": true,
+      "version": "1.0",
+      "retention_scripts": [
+        {
+          "script_name": "HTTP Metrics Export",
+          "description": "Exports HTTP request metrics to OpenTelemetry collector every 60 seconds.",
+          "script": "import px\nimport pxtrace\n# Export HTTP events\ndf = px.DataFrame(table='http_events', start_time=px.plugin.start_time)\ndf.service = df.ctx['service']\npx.export(df, px.otel.Data(resource=px.otel.Resource(attrs={'service.name': df.service}), data=[px.otel.metric.Gauge(name='http.resp_latency', value=df.resp_latency_ns)]))",
+          "frequency_s": 60,
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

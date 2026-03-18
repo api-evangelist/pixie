@@ -1,0 +1,444 @@
+openapi: 3.1.0
+info:
+  title: Pixie API
+  description: >-
+    The Pixie API provides programmatic access to the Pixie Kubernetes
+    observability platform. It enables listing and managing clusters, executing
+    PxL scripts to query telemetry data collected via eBPF, and retrieving
+    results including full-body application requests, resource metrics, and
+    network data without requiring manual instrumentation.
+  version: '0.1'
+  contact:
+    name: Pixie Community
+    url: https://px.dev/community/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+externalDocs:
+  description: Pixie API Documentation
+  url: https://docs.px.dev/reference/api/overview/
+servers:
+  - url: https://work.withpixie.ai
+    description: Pixie Cloud API server
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Clusters
+    description: >-
+      Operations for listing and inspecting Pixie-instrumented Kubernetes clusters
+      connected to the Pixie Cloud.
+  - name: Scripts
+    description: >-
+      Operations for executing PxL scripts against a cluster and retrieving
+      telemetry query results.
+  - name: Health
+    description: Health and status endpoints for the Pixie service.
+paths:
+  /api/clusters:
+    get:
+      operationId: listClusters
+      summary: List clusters
+      description: >-
+        Returns a list of all Kubernetes clusters currently connected to and
+        monitored by the Pixie Cloud deployment. Each cluster entry includes its
+        ID, name, status, and Vizier (agent) version information.
+      tags:
+        - Clusters
+      responses:
+        '200':
+          description: List of connected clusters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterListResponse'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/clusters/{cluster_id}:
+    get:
+      operationId: getCluster
+      summary: Get cluster details
+      description: >-
+        Returns detailed information about a specific cluster, including its
+        connection status, Vizier version, and last heartbeat time.
+      tags:
+        - Clusters
+      parameters:
+        - $ref: '#/components/parameters/cluster_id'
+      responses:
+        '200':
+          description: Cluster details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/pxl/execute:
+    post:
+      operationId: executeScript
+      summary: Execute a PxL script
+      description: >-
+        Executes a PxL script on a specified cluster and returns the telemetry
+        query results as structured tabular data. PxL scripts use a Python-based
+        domain-specific language to query eBPF-collected data including HTTP
+        requests, resource metrics, network flows, and application traces.
+      tags:
+        - Scripts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecuteScriptRequest'
+      responses:
+        '200':
+          description: Script execution results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteScriptResponse'
+        '400':
+          description: Invalid script or request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Script execution error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      description: >-
+        Returns the health status of the Pixie Cloud API service. Used for
+        liveness and readiness monitoring.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status of the service.
+                    enum:
+                      - ok
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: pixie-api-key
+      description: >-
+        Pixie API key for authenticating requests. Generate an API key from the
+        Pixie Cloud UI under Profile > API Keys.
+  parameters:
+    cluster_id:
+      name: cluster_id
+      in: path
+      required: true
+      description: >-
+        Unique identifier of the Pixie-monitored Kubernetes cluster.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    ClusterListResponse:
+      type: object
+      description: Response containing a list of clusters connected to Pixie Cloud.
+      properties:
+        clusters:
+          type: array
+          description: List of cluster objects.
+          items:
+            $ref: '#/components/schemas/Cluster'
+    Cluster:
+      type: object
+      description: >-
+        A Kubernetes cluster connected to Pixie Cloud with a deployed Vizier agent
+        collecting eBPF telemetry data.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the cluster.
+        clusterName:
+          type: string
+          description: >-
+            Human-readable name of the Kubernetes cluster, typically the cluster
+            context name.
+        clusterUID:
+          type: string
+          description: Kubernetes cluster UID as reported by the cluster itself.
+        clusterVersion:
+          type: string
+          description: Kubernetes version running on this cluster.
+        status:
+          type: string
+          description: Current connection and health status of the Vizier agent.
+          enum:
+            - CS_HEALTHY
+            - CS_UNHEALTHY
+            - CS_DISCONNECTED
+            - CS_UPDATING
+            - CS_CONNECTED
+            - CS_UPDATE_FAILED
+            - CS_UNKNOWN
+        vizierVersion:
+          type: string
+          description: Version of the Pixie Vizier agent deployed on the cluster.
+        lastHeartbeatNs:
+          type: integer
+          format: int64
+          description: Timestamp in nanoseconds of the last heartbeat from the Vizier agent.
+        numNodes:
+          type: integer
+          description: Number of nodes in the cluster.
+        numInstrumentedNodes:
+          type: integer
+          description: Number of nodes where Pixie eBPF probes are active.
+        prettyClusterName:
+          type: string
+          description: Display-friendly name for the cluster.
+    ExecuteScriptRequest:
+      type: object
+      description: Request to execute a PxL script on a target cluster.
+      required:
+        - cluster_id
+        - pxl_script
+      properties:
+        cluster_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the cluster to run the script against.
+        pxl_script:
+          type: string
+          description: >-
+            PxL script source code to execute. PxL is a Python-dialect DSL for
+            querying Pixie telemetry data.
+          example: "import px\ndf = px.DataFrame(table='http_events', start_time='-5m')\npx.display(df)"
+        func_name:
+          type: string
+          description: >-
+            Name of a specific function within the PxL script to invoke. If
+            omitted, the script is executed as a module-level script.
+        script_args:
+          type: object
+          description: >-
+            Key-value arguments to pass to the PxL script function. Values must
+            be strings.
+          additionalProperties:
+            type: string
+    ExecuteScriptResponse:
+      type: object
+      description: Response containing the results of a PxL script execution.
+      properties:
+        status:
+          $ref: '#/components/schemas/ScriptStatus'
+        tables:
+          type: array
+          description: >-
+            Tabular result sets returned by the script. Each table corresponds
+            to a px.display() call in the PxL script.
+          items:
+            $ref: '#/components/schemas/ResultTable'
+    ScriptStatus:
+      type: object
+      description: Status of a script execution.
+      properties:
+        code:
+          type: integer
+          description: >-
+            Status code. 0 indicates success; non-zero values indicate errors.
+        message:
+          type: string
+          description: Human-readable status message or error description.
+        errorDetails:
+          type: array
+          description: Detailed error information if the script encountered errors.
+          items:
+            type: object
+            properties:
+              compilerError:
+                type: object
+                description: Compilation error detail for PxL scripts.
+                properties:
+                  line:
+                    type: integer
+                    description: Line number where the error occurred.
+                  column:
+                    type: integer
+                    description: Column number where the error occurred.
+                  message:
+                    type: string
+                    description: Error message.
+    ResultTable:
+      type: object
+      description: A single tabular result set from a PxL script execution.
+      properties:
+        name:
+          type: string
+          description: Name of the result table, set by the first argument to px.display().
+        relation:
+          $ref: '#/components/schemas/Relation'
+        data:
+          type: array
+          description: Rows of data in the result table.
+          items:
+            $ref: '#/components/schemas/RowBatch'
+    Relation:
+      type: object
+      description: Schema describing the columns of a result table.
+      properties:
+        columns:
+          type: array
+          description: Column definitions for the result table.
+          items:
+            $ref: '#/components/schemas/Column'
+    Column:
+      type: object
+      description: A column definition in a result table.
+      properties:
+        columnName:
+          type: string
+          description: Name of the column.
+        columnType:
+          type: string
+          description: Data type of the column.
+          enum:
+            - BOOLEAN
+            - INT64
+            - UINT128
+            - FLOAT64
+            - STRING
+            - TIME64NS
+            - DURATION64NS
+            - JSONOBJECT
+            - UNKNOWN
+        columnDesc:
+          type: string
+          description: Human-readable description of the column's contents.
+        columnSemanticType:
+          type: string
+          description: >-
+            Semantic type hint for rendering and interpretation, such as
+            ST_HTTP_RESP_STATUS for HTTP status codes.
+    RowBatch:
+      type: object
+      description: A batch of rows in a result table.
+      properties:
+        numRows:
+          type: integer
+          description: Number of rows in this batch.
+        eos:
+          type: boolean
+          description: If true, this is the last batch for this table.
+        cols:
+          type: array
+          description: Column data arrays in the same order as the relation's columns.
+          items:
+            $ref: '#/components/schemas/ColumnData'
+    ColumnData:
+      type: object
+      description: Data values for a single column in a row batch.
+      properties:
+        stringData:
+          type: object
+          description: String-typed column values.
+          properties:
+            data:
+              type: array
+              items:
+                type: string
+        int64Data:
+          type: object
+          description: Int64-typed column values.
+          properties:
+            data:
+              type: array
+              items:
+                type: integer
+                format: int64
+        float64Data:
+          type: object
+          description: Float64-typed column values.
+          properties:
+            data:
+              type: array
+              items:
+                type: number
+                format: double
+        booleanData:
+          type: object
+          description: Boolean-typed column values.
+          properties:
+            data:
+              type: array
+              items:
+                type: boolean
+        uint128Data:
+          type: object
+          description: UInt128-typed column values (used for UUIDs and IP addresses).
+          properties:
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  high:
+                    type: integer
+                    format: int64
+                  low:
+                    type: integer
+                    format: int64
+    ErrorResponse:
+      type: object
+      description: Standard error response from the Pixie API.
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        details:
+          type: array
+          description: Additional error details.
+          items:
+            type: object
