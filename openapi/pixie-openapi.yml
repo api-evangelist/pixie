@@ -27,12 +27,12 @@ tags:
     description: >-
       Operations for listing and inspecting Pixie-instrumented Kubernetes clusters
       connected to the Pixie Cloud.
+  - name: Health
+    description: Health and status endpoints for the Pixie service.
   - name: Scripts
     description: >-
       Operations for executing PxL scripts against a cluster and retrieving
       telemetry query results.
-  - name: Health
-    description: Health and status endpoints for the Pixie service.
 paths:
   /api/clusters:
     get:

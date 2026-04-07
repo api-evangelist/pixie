@@ -7,10 +7,10 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Observability
+  - eBPF
   - Kubernetes
   - Monitoring
-  - eBPF
+  - Observability
 url: >-
   https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml
 created: '2026-03-16'
@@ -24,8 +24,8 @@ apis:
       collection without manual instrumentation.
     humanURL: https://docs.px.dev/
     tags:
-      - Observability
       - Kubernetes
+      - Observability
     properties:
       - type: Documentation
         url: https://docs.px.dev/
@@ -46,11 +46,11 @@ apis:
       full-body request data collected via eBPF.
     humanURL: https://docs.px.dev/reference/pxl/
     tags:
-      - Observability
-      - Kubernetes
       - eBPF
-      - Scripting
+      - Kubernetes
       - Metrics
+      - Observability
+      - Scripting
     properties:
       - type: Documentation
         url: https://docs.px.dev/reference/pxl/
@@ -67,11 +67,11 @@ apis:
       data in Grafana dashboards.
     humanURL: https://docs.px.dev/reference/plugins/plugin-system/
     tags:
+      - Grafana
+      - Integrations
+      - Kubernetes
       - Observability
       - Plugins
-      - Integrations
-      - Grafana
-      - Kubernetes
     properties:
       - type: Documentation
         url: https://docs.px.dev/reference/plugins/plugin-system/
