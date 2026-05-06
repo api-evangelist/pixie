@@ -4,95 +4,48 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Pixie
 providerId: pixie
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - eBPF
-  - Kubernetes
-  - Monitoring
-  - Observability
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Pixie API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  - Observability
+  - Kubernetes
+  - Open Source
+notes: Pixie is open source and self-hostable. The project does not publish API rate limits because
+  throughput is bounded by the user's own deployed Pixie Cloud and Vizier components. Community-
+  hosted Pixie Cloud may apply soft fair-use limits that are not publicly documented.
+description: Pixie is an Apache-2.0 open-source observability tool. The Pixie API surface (gRPC
+  Cloud API, PxL Script API, Plugin System API) is consumed against either a self-hosted Pixie
+  Cloud or the community-hosted Pixie Cloud. The project does not publish numeric per-key rate
+  limits; throughput is governed by the deployment's own resource allocation and any fair-use
+  limits the community-hosted environment chooses to enforce.
+sources:
+  - https://docs.px.dev/about-pixie/faq/
+  - https://docs.px.dev/reference/api/overview/
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Pixie API
-      - Pixie PxL Script API
-      - Pixie Plugin System API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Pixie API
-      - Pixie PxL Script API
-      - Pixie Plugin System API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Pixie API
-      - Pixie PxL Script API
-      - Pixie Plugin System API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Pixie API
-      - Pixie PxL Script API
-      - Pixie Plugin System API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Pixie API
-      - Pixie PxL Script API
-      - Pixie Plugin System API
+  - name: Self-Hosted Pixie Cloud
+    scope: deployment
+    metric: varies
+    limit: 'bounded by user-deployed resources; no project-published per-second numeric'
+    notes: Throughput depends on the size of the Pixie Cloud and Vizier components in your cluster.
+  - name: Community-Hosted Pixie Cloud
+    scope: organization
+    metric: varies
+    limit: 'fair-use; not publicly documented'
+    notes: The community-hosted control plane applies soft fair-use limits to prevent abuse.
+      Sustained heavy users are encouraged to self-host.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Self-Hosting
+    description: For predictable throughput, deploy your own Pixie Cloud + Vizier rather than relying
+      on the community-hosted control plane.
+  - name: PxL Script Sampling
+    description: PxL scripts that aggregate over the in-memory eBPF table are constrained by the
+      retention window of that table (typically tens of seconds to minutes); design queries to
+      sample rather than full-scan large clusters.
+  - name: Backoff
+    description: On 503 responses, retry with exponential backoff and jitter.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
