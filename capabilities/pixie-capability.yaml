@@ -1,0 +1,163 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pixie API
+  description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing
+    and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including
+    full-body application requests, resource metrics, and network data without requiring manual instrumentation.
+  tags:
+  - Pixie
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: pixie
+    baseUri: https://work.withpixie.ai
+    description: Pixie API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: pixie-api-key
+      value: '{{PIXIE_TOKEN}}'
+    resources:
+    - name: api-clusters
+      path: /api/clusters
+      operations:
+      - name: listclusters
+        method: GET
+        description: Pixie List clusters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-clusters-cluster-id
+      path: /api/clusters/{cluster_id}
+      operations:
+      - name: getcluster
+        method: GET
+        description: Pixie Get cluster details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-pxl-execute
+      path: /api/pxl/execute
+      operations:
+      - name: executescript
+        method: POST
+        description: Pixie Execute a PxL script
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-health
+      path: /api/health
+      operations:
+      - name: gethealth
+        method: GET
+        description: Pixie Health check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: pixie-rest
+    description: REST adapter for Pixie API.
+    resources:
+    - path: /api/clusters
+      name: listclusters
+      operations:
+      - method: GET
+        name: listclusters
+        description: Pixie List clusters
+        call: pixie.listclusters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/clusters/{cluster_id}
+      name: getcluster
+      operations:
+      - method: GET
+        name: getcluster
+        description: Pixie Get cluster details
+        call: pixie.getcluster
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/pxl/execute
+      name: executescript
+      operations:
+      - method: POST
+        name: executescript
+        description: Pixie Execute a PxL script
+        call: pixie.executescript
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/health
+      name: gethealth
+      operations:
+      - method: GET
+        name: gethealth
+        description: Pixie Health check
+        call: pixie.gethealth
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: pixie-mcp
+    transport: http
+    description: MCP adapter for Pixie API for AI agent use.
+    tools:
+    - name: listclusters
+      description: Pixie List clusters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: pixie.listclusters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcluster
+      description: Pixie Get cluster details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: pixie.getcluster
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: executescript
+      description: Pixie Execute a PxL script
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: pixie.executescript
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gethealth
+      description: Pixie Health check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: pixie.gethealth
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    PIXIE_TOKEN: PIXIE_TOKEN
