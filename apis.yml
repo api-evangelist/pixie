@@ -29,7 +29,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.px.dev/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.px.dev/installing-pixie/
       - type: Reference
         url: https://docs.px.dev/reference/api/overview/
@@ -82,7 +82,7 @@ apis:
 common:
   - type: Website
     url: https://px.dev/
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/pixie-context.jsonld
   - type: JSONSchema
     url: json-schema/pixie-pxl-script-schema.json
@@ -90,9 +90,9 @@ common:
     url: json-schema/pixie-plugin-schema.json
   - type: Documentation
     url: https://docs.px.dev/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.px.dev/installing-pixie/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/pixie-io
   - type: GitHubRepository
     url: https://github.com/pixie-io/pixie
