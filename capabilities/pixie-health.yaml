@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pixie API — Health
+  description: 'Pixie API — Health. 1 operations. Lead operation: Pixie Health check. Self-contained Naftiko capability covering
+    one Pixie business surface.'
+  tags:
+  - Pixie
+  - Health
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PIXIE_API_KEY: PIXIE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: pixie-health
+    baseUri: https://work.withpixie.ai
+    description: Pixie API — Health business capability. Self-contained, no shared references.
+    resources:
+    - name: api-health
+      path: /api/health
+      operations:
+      - name: gethealth
+        method: GET
+        description: Pixie Health check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: pixie-api-key
+      value: '{{env.PIXIE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: pixie-health-rest
+    port: 8080
+    description: REST adapter for Pixie API — Health. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/api/health
+      name: api-health
+      description: REST surface for api-health.
+      operations:
+      - method: GET
+        name: gethealth
+        description: Pixie Health check
+        call: pixie-health.gethealth
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: pixie-health-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pixie API — Health. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: pixie-health-check
+      description: Pixie Health check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: pixie-health.gethealth
+      outputParameters:
+      - type: object
+        mapping: $.

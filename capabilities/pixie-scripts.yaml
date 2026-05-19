@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pixie API — Scripts
+  description: 'Pixie API — Scripts. 1 operations. Lead operation: Pixie Execute a PxL script. Self-contained Naftiko capability
+    covering one Pixie business surface.'
+  tags:
+  - Pixie
+  - Scripts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    PIXIE_API_KEY: PIXIE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: pixie-scripts
+    baseUri: https://work.withpixie.ai
+    description: Pixie API — Scripts business capability. Self-contained, no shared references.
+    resources:
+    - name: api-pxl-execute
+      path: /api/pxl/execute
+      operations:
+      - name: executescript
+        method: POST
+        description: Pixie Execute a PxL script
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: pixie-api-key
+      value: '{{env.PIXIE_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: pixie-scripts-rest
+    port: 8080
+    description: REST adapter for Pixie API — Scripts. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/api/pxl/execute
+      name: api-pxl-execute
+      description: REST surface for api-pxl-execute.
+      operations:
+      - method: POST
+        name: executescript
+        description: Pixie Execute a PxL script
+        call: pixie-scripts.executescript
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: pixie-scripts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pixie API — Scripts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: pixie-execute-pxl-script
+      description: Pixie Execute a PxL script
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: pixie-scripts.executescript
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
