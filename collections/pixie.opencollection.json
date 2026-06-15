@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pixie API",
+    "version": "0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "pixie-api-key",
+      "value": "{{pixie-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clusters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Pixie List clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://work.withpixie.ai/api/clusters"
+          },
+          "docs": "Returns a list of all Kubernetes clusters currently connected to and monitored by the Pixie Cloud deployment. Each cluster entry includes its ID, name, status, and Vizier (agent) version information."
+        },
+        {
+          "info": {
+            "name": "Pixie Get cluster details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://work.withpixie.ai/api/clusters/:cluster_id",
+            "params": [
+              {
+                "name": "cluster_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the Pixie-monitored Kubernetes cluster."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific cluster, including its connection status, Vizier version, and last heartbeat time."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Scripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Pixie Execute a PxL script",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://work.withpixie.ai/api/pxl/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a PxL script on a specified cluster and returns the telemetry query results as structured tabular data. PxL scripts use a Python-based domain-specific language to query eBPF-collected data including HTTP requests, resource metrics, network flows, and application traces."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Pixie Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://work.withpixie.ai/api/health"
+          },
+          "docs": "Returns the health status of the Pixie Cloud API service. Used for liveness and readiness monitoring."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

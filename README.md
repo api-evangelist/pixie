@@ -1,85 +1,103 @@
 # Pixie (pixie)
+
 Pixie is a Kubernetes observability platform that uses eBPF to automatically collect telemetry data including full-body application requests, resource and network metrics, and application profiles without manual instrumentation.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Index
 
-## Tags:
+## Tags
 
- - Observability, Kubernetes, Monitoring, eBPF
+- eBPF
+- Kubernetes
+- Monitoring
+- Observability
 
 ## Timestamps
 
-- **Created:** 2026-03-16 
-- **Modified:** 2026-03-18 
+- **Created:** 2026-03-16
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Pixie API
+
 Kubernetes observability platform using eBPF for automatic telemetry collection without manual instrumentation.
 
-**Human URL:** [https://docs.px.dev/](https://docs.px.dev/)
+- **Human URL:** [https://docs.px.dev/](https://docs.px.dev/)
 
+#### Tags
 
-#### Tags:
-
- - Observability, Kubernetes
+- Kubernetes
+- Observability
 
 #### Properties
 
 - [Documentation](https://docs.px.dev/)
 - [Getting Started](https://docs.px.dev/installing-pixie/)
 - [Reference](https://docs.px.dev/reference/api/overview/)
-- [Client Libraries](https://docs.px.dev/reference/api/)
-- [OpenAPI](openapi/pixie-openapi.yml)
+- [Client  Libraries](https://docs.px.dev/reference/api/)
+- [OpenAPI](openapi/pixie-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Pixie PxL Script API
+
 Python-dialect domain-specific language and API for querying and analyzing telemetry data collected by Pixie within a Kubernetes cluster. PxL scripts allow developers to filter, aggregate, and visualize metrics, traces, and full-body request data collected via eBPF.
 
-**Human URL:** [https://docs.px.dev/reference/pxl/](https://docs.px.dev/reference/pxl/)
+- **Human URL:** [https://docs.px.dev/reference/pxl/](https://docs.px.dev/reference/pxl/)
 
+#### Tags
 
-#### Tags:
-
- - Observability, Kubernetes, eBPF, Scripting, Metrics
+- eBPF
+- Kubernetes
+- Metrics
+- Observability
+- Scripting
 
 #### Properties
 
 - [Documentation](https://docs.px.dev/reference/pxl/)
 - [Reference](https://docs.px.dev/reference/pxl/)
-- [JSONSchema](json-schema/pixie-pxl-script-schema.json)
+- [JSON Schema](json-schema/pixie-pxl-script-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Pixie Plugin System API
+
 Plugin API that allows configuring PxL scripts to export observability data from Pixie at regularly scheduled intervals to external systems. Supports integrations including a Grafana datasource plugin for visualizing Pixie data in Grafana dashboards.
 
-**Human URL:** [https://docs.px.dev/reference/plugins/plugin-system/](https://docs.px.dev/reference/plugins/plugin-system/)
+- **Human URL:** [https://docs.px.dev/reference/plugins/plugin-system/](https://docs.px.dev/reference/plugins/plugin-system/)
 
+#### Tags
 
-#### Tags:
-
- - Observability, Plugins, Integrations, Grafana, Kubernetes
+- Grafana
+- Integrations
+- Kubernetes
+- Observability
+- Plugins
 
 #### Properties
 
 - [Documentation](https://docs.px.dev/reference/plugins/plugin-system/)
 - [Reference](https://docs.px.dev/reference/plugins/grafana/)
-- [JSONSchema](json-schema/pixie-plugin-schema.json)
+- [JSON Schema](json-schema/pixie-plugin-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [LinkedIn](https://www.linkedin.com/company/pixieai)
 - [Website](https://px.dev/)
-- [JSON-LD](json-ld/pixie-context.jsonld)
-- [JSONSchema](json-schema/pixie-pxl-script-schema.json)
-- [JSONSchema](json-schema/pixie-plugin-schema.json)
+- [JSON-LD](json-ld/pixie-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [JSON Schema](json-schema/pixie-pxl-script-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/pixie-plugin-schema.json) — [JSON Schema](https://json-schema.org/specification)
 - [Documentation](https://docs.px.dev/)
 - [Getting Started](https://docs.px.dev/installing-pixie/)
 - [GitHub Organization](https://github.com/pixie-io)
-- [GitHubRepository](https://github.com/pixie-io/pixie)
+- [GitHub Repository](https://github.com/pixie-io/pixie)
 - [Blog](https://blog.px.dev/)
 - [Community](https://px.dev/community/)
 - [Slack](https://slackin.px.dev/)
@@ -87,5 +105,4 @@ Plugin API that allows configuring PxL scripts to export observability data from
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com

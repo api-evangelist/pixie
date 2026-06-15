@@ -1,0 +1,834 @@
+{
+  "item": [
+    {
+      "id": "95cffbaf-b180-44ad-8933-1ed3d3afa617",
+      "name": "Clusters",
+      "description": {
+        "content": "Operations for listing and inspecting Pixie-instrumented Kubernetes clusters connected to the Pixie Cloud.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e1793f10-c46e-4a68-bf37-439aa74b8280",
+          "name": "Pixie List clusters",
+          "request": {
+            "name": "Pixie List clusters",
+            "description": {
+              "content": "Returns a list of all Kubernetes clusters currently connected to and monitored by the Pixie Cloud deployment. Each cluster entry includes its ID, name, status, and Vizier (agent) version information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "952903fb-d3a4-4bed-972c-5b034a7268e6",
+              "name": "List of connected clusters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clusters\": [\n    {\n      \"id\": \"8dae549b-2de2-31f5-f27f-db02c93e16a3\",\n      \"clusterName\": \"string\",\n      \"clusterUID\": \"string\",\n      \"clusterVersion\": \"string\",\n      \"status\": \"CS_UNHEALTHY\",\n      \"vizierVersion\": \"string\",\n      \"lastHeartbeatNs\": 2708,\n      \"numNodes\": 9610,\n      \"numInstrumentedNodes\": 4162,\n      \"prettyClusterName\": \"string\"\n    },\n    {\n      \"id\": \"aeb45ecc-53a9-f769-6e00-d94499f2ec9f\",\n      \"clusterName\": \"string\",\n      \"clusterUID\": \"string\",\n      \"clusterVersion\": \"string\",\n      \"status\": \"CS_UPDATE_FAILED\",\n      \"vizierVersion\": \"string\",\n      \"lastHeartbeatNs\": 3271,\n      \"numNodes\": 388,\n      \"numInstrumentedNodes\": 2983,\n      \"prettyClusterName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8f6230d-711c-4891-8ba3-3507ae55a64c",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3b4ea6e-37e5-45c5-bcfd-a3df57f3d68e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1602ea0a-727d-4913-9a7c-b33f40f6ed71",
+          "name": "Pixie Get cluster details",
+          "request": {
+            "name": "Pixie Get cluster details",
+            "description": {
+              "content": "Returns detailed information about a specific cluster, including its connection status, Vizier version, and last heartbeat time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clusters",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "cluster_id",
+                  "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69e3dc76-9434-4100-b7c3-38caee57d002",
+              "name": "Cluster details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"f2dbf125-8206-9478-45d3-d79d83ef3dcd\",\n  \"clusterName\": \"string\",\n  \"clusterUID\": \"string\",\n  \"clusterVersion\": \"string\",\n  \"status\": \"CS_UPDATE_FAILED\",\n  \"vizierVersion\": \"string\",\n  \"lastHeartbeatNs\": 2949,\n  \"numNodes\": 3639,\n  \"numInstrumentedNodes\": 8774,\n  \"prettyClusterName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cc4e21c-5289-4ac2-ad5a-6951508ade01",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9751f3b4-ab8b-4de2-838e-7e142a735356",
+              "name": "Cluster not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "00783734-2951-4072-b91e-793caebca200",
+      "name": "Health",
+      "description": {
+        "content": "Health and status endpoints for the Pixie service.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7f706fd8-4161-468d-8d6d-6b37fa9cc186",
+          "name": "Pixie Health check",
+          "request": {
+            "name": "Pixie Health check",
+            "description": {
+              "content": "Returns the health status of the Pixie Cloud API service. Used for liveness and readiness monitoring.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d236a75-a352-4c30-a0e3-e576889c2c5d",
+              "name": "Service is healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3a0814bb-9e50-46bf-b517-b4aefeac497a",
+      "name": "Scripts",
+      "description": {
+        "content": "Operations for executing PxL scripts against a cluster and retrieving telemetry query results.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3afec47d-9b5e-4a65-8c09-ce24cd304f4f",
+          "name": "Pixie Execute a PxL script",
+          "request": {
+            "name": "Pixie Execute a PxL script",
+            "description": {
+              "content": "Executes a PxL script on a specified cluster and returns the telemetry query results as structured tabular data. PxL scripts use a Python-based domain-specific language to query eBPF-collected data including HTTP requests, resource metrics, network flows, and application traces.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "pxl",
+                "execute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"<string>\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "675c3dfb-988d-4d63-b9cb-5bcdf73f18bd",
+              "name": "Script execution results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pxl",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"import px\\ndf = px.DataFrame(table='http_events', start_time='-5m')\\npx.display(df)\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": {\n    \"code\": 3388,\n    \"message\": \"string\",\n    \"errorDetails\": [\n      {\n        \"compilerError\": {\n          \"line\": 1847,\n          \"column\": 474,\n          \"message\": \"string\"\n        }\n      },\n      {\n        \"compilerError\": {\n          \"line\": 8984,\n          \"column\": 5818,\n          \"message\": \"string\"\n        }\n      }\n    ]\n  },\n  \"tables\": [\n    {\n      \"name\": \"string\",\n      \"relation\": {\n        \"columns\": [\n          {\n            \"columnName\": \"string\",\n            \"columnType\": \"UINT128\",\n            \"columnDesc\": \"string\",\n            \"columnSemanticType\": \"string\"\n          },\n          {\n            \"columnName\": \"string\",\n            \"columnType\": \"TIME64NS\",\n            \"columnDesc\": \"string\",\n            \"columnSemanticType\": \"string\"\n          }\n        ]\n      },\n      \"data\": [\n        {\n          \"numRows\": 9760,\n          \"eos\": false,\n          \"cols\": [\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"numRows\": 3589,\n          \"eos\": false,\n          \"cols\": [\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"relation\": {\n        \"columns\": [\n          {\n            \"columnName\": \"string\",\n            \"columnType\": \"FLOAT64\",\n            \"columnDesc\": \"string\",\n            \"columnSemanticType\": \"string\"\n          },\n          {\n            \"columnName\": \"string\",\n            \"columnType\": \"UNKNOWN\",\n            \"columnDesc\": \"string\",\n            \"columnSemanticType\": \"string\"\n          }\n        ]\n      },\n      \"data\": [\n        {\n          \"numRows\": 9628,\n          \"eos\": true,\n          \"cols\": [\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"numRows\": 713,\n          \"eos\": false,\n          \"cols\": [\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"stringData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"int64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"float64Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"booleanData\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"uint128Data\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aee5b175-53e7-44d3-8997-7eeaa3a74d98",
+              "name": "Invalid script or request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pxl",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"import px\\ndf = px.DataFrame(table='http_events', start_time='-5m')\\npx.display(df)\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acb3cacb-578e-4a10-8532-91c4a4792d1c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pxl",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"import px\\ndf = px.DataFrame(table='http_events', start_time='-5m')\\npx.display(df)\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7263c109-9532-450d-87b9-3dc94f5820e8",
+              "name": "Cluster not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pxl",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"import px\\ndf = px.DataFrame(table='http_events', start_time='-5m')\\npx.display(df)\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "686b55d1-8b27-4101-94e4-953bc0632be7",
+              "name": "Script execution error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "pxl",
+                    "execute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster_id\": \"<uuid>\",\n  \"pxl_script\": \"import px\\ndf = px.DataFrame(table='http_events', start_time='-5m')\\npx.display(df)\",\n  \"func_name\": \"<string>\",\n  \"script_args\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1099,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://work.withpixie.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "pixie-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "35a12beb-3d8f-4934-9dca-a3de40fa9279",
+    "name": "Pixie API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.\n\nContact Support:\n Name: Pixie Community",
+      "type": "text/plain"
+    }
+  }
+}
