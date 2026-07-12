@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/pixie-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: pixie-api-key
+  description: Pixie API key for authenticating requests. Generate an API key from the Pixie
+    Cloud UI under Profile > API Keys.
+  sources:
+  - openapi/pixie-openapi.yml

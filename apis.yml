@@ -74,6 +74,10 @@ apis:
       - type: JSONSchema
         url: json-schema/pixie-plugin-schema.json
 common:
+  - type: DomainSecurity
+    url: security/pixie-domain-security.yml
+  - type: Authentication
+    url: authentication/pixie-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/pixieai
   - type: Website
