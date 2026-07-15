@@ -74,6 +74,8 @@ apis:
       - type: JSONSchema
         url: json-schema/pixie-plugin-schema.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/pixie-agentic-access.yml
   - type: DomainSecurity
     url: security/pixie-domain-security.yml
   - type: Authentication
