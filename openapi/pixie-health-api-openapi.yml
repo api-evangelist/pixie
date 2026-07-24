@@ -1,0 +1,50 @@
+openapi: 3.1.0
+info:
+  title: Pixie Clusters Health API
+  description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.
+  version: '0.1'
+  contact:
+    name: Pixie Community
+    url: https://px.dev/community/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://work.withpixie.ai
+  description: Pixie Cloud API server
+security:
+- apiKeyAuth: []
+tags:
+- name: Health
+  description: Health and status endpoints for the Pixie service.
+paths:
+  /api/health:
+    get:
+      operationId: getHealth
+      summary: Pixie Health check
+      description: Returns the health status of the Pixie Cloud API service. Used for liveness and readiness monitoring.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status of the service.
+                    enum:
+                    - ok
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: pixie-api-key
+      description: Pixie API key for authenticating requests. Generate an API key from the Pixie Cloud UI under Profile > API Keys.
+externalDocs:
+  description: Pixie API Documentation
+  url: https://docs.px.dev/reference/api/overview/

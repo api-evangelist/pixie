@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Pixie Clusters API
+  description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.
+  version: '0.1'
+  contact:
+    name: Pixie Community
+    url: https://px.dev/community/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://work.withpixie.ai
+  description: Pixie Cloud API server
+security:
+- apiKeyAuth: []
+tags:
+- name: Clusters
+  description: Operations for listing and inspecting Pixie-instrumented Kubernetes clusters connected to the Pixie Cloud.
+paths:
+  /api/clusters:
+    get:
+      operationId: listClusters
+      summary: Pixie List clusters
+      description: Returns a list of all Kubernetes clusters currently connected to and monitored by the Pixie Cloud deployment. Each cluster entry includes its ID, name, status, and Vizier (agent) version information.
+      tags:
+      - Clusters
+      responses:
+        '200':
+          description: List of connected clusters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterListResponse'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/clusters/{cluster_id}:
+    get:
+      operationId: getCluster
+      summary: Pixie Get cluster details
+      description: Returns detailed information about a specific cluster, including its connection status, Vizier version, and last heartbeat time.
+      tags:
+      - Clusters
+      parameters:
+      - $ref: '#/components/parameters/cluster_id'
+      responses:
+        '200':
+          description: Cluster details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cluster'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Cluster not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Cluster:
+      type: object
+      description: A Kubernetes cluster connected to Pixie Cloud with a deployed Vizier agent collecting eBPF telemetry data.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the cluster.
+        clusterName:
+          type: string
+          description: Human-readable name of the Kubernetes cluster, typically the cluster context name.
+        clusterUID:
+          type: string
+          description: Kubernetes cluster UID as reported by the cluster itself.
+        clusterVersion:
+          type: string
+          description: Kubernetes version running on this cluster.
+        status:
+          type: string
+          description: Current connection and health status of the Vizier agent.
+          enum:
+          - CS_HEALTHY
+          - CS_UNHEALTHY
+          - CS_DISCONNECTED
+          - CS_UPDATING
+          - CS_CONNECTED
+          - CS_UPDATE_FAILED
+          - CS_UNKNOWN
+        vizierVersion:
+          type: string
+          description: Version of the Pixie Vizier agent deployed on the cluster.
+        lastHeartbeatNs:
+          type: integer
+          format: int64
+          description: Timestamp in nanoseconds of the last heartbeat from the Vizier agent.
+        numNodes:
+          type: integer
+          description: Number of nodes in the cluster.
+        numInstrumentedNodes:
+          type: integer
+          description: Number of nodes where Pixie eBPF probes are active.
+        prettyClusterName:
+          type: string
+          description: Display-friendly name for the cluster.
+    ClusterListResponse:
+      type: object
+      description: Response containing a list of clusters connected to Pixie Cloud.
+      properties:
+        clusters:
+          type: array
+          description: List of cluster objects.
+          items:
+            $ref: '#/components/schemas/Cluster'
+    ErrorResponse:
+      type: object
+      description: Standard error response from the Pixie API.
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        details:
+          type: array
+          description: Additional error details.
+          items:
+            type: object
+  parameters:
+    cluster_id:
+      name: cluster_id
+      in: path
+      required: true
+      description: Unique identifier of the Pixie-monitored Kubernetes cluster.
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: pixie-api-key
+      description: Pixie API key for authenticating requests. Generate an API key from the Pixie Cloud UI under Profile > API Keys.
+externalDocs:
+  description: Pixie API Documentation
+  url: https://docs.px.dev/reference/api/overview/
