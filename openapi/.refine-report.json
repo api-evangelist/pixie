@@ -1,0 +1,18 @@
+{
+  "provider": "pixie",
+  "sources": [
+    "pixie-clusters-api-openapi.yml",
+    "pixie-health-api-openapi.yml",
+    "pixie-scripts-api-openapi.yml"
+  ],
+  "outputs": [
+    "pixie-clusters-api-openapi.yml",
+    "pixie-health-api-openapi.yml",
+    "pixie-scripts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
