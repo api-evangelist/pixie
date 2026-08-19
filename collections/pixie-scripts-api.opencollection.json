@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pixie Clusters Scripts API",
+    "version": "0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "pixie-api-key",
+      "value": "{{pixie-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Scripts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Pixie Execute a PxL script",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://work.withpixie.ai/api/pxl/execute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a PxL script on a specified cluster and returns the telemetry query results as structured tabular data. PxL scripts use a Python-based domain-specific language to query eBPF-collected data including HTTP requests, resource metrics, network flows, and application traces."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

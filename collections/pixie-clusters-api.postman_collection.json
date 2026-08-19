@@ -1,0 +1,417 @@
+{
+  "item": [
+    {
+      "id": "a5d04661-a9de-4bf2-b996-6be05f0fd9f1",
+      "name": "Clusters",
+      "description": {
+        "content": "Operations for listing and inspecting Pixie-instrumented Kubernetes clusters connected to the Pixie Cloud.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "72d32eae-2cc6-4b79-8e0e-2a5123a7aa34",
+          "name": "Pixie List clusters",
+          "request": {
+            "name": "Pixie List clusters",
+            "description": {
+              "content": "Returns a list of all Kubernetes clusters currently connected to and monitored by the Pixie Cloud deployment. Each cluster entry includes its ID, name, status, and Vizier (agent) version information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clusters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99b37ded-9ffa-4d6c-8d1f-acbe4b4423da",
+              "name": "List of connected clusters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clusters\": [\n    {\n      \"id\": \"16441f35-4f7c-d909-c0a9-c86c34ca0d4b\",\n      \"clusterName\": \"string\",\n      \"clusterUID\": \"string\",\n      \"clusterVersion\": \"string\",\n      \"status\": \"CS_HEALTHY\",\n      \"vizierVersion\": \"string\",\n      \"lastHeartbeatNs\": 3822,\n      \"numNodes\": 7544,\n      \"numInstrumentedNodes\": 2030,\n      \"prettyClusterName\": \"string\"\n    },\n    {\n      \"id\": \"ae0b562d-d043-ccda-3479-cec3a03bd986\",\n      \"clusterName\": \"string\",\n      \"clusterUID\": \"string\",\n      \"clusterVersion\": \"string\",\n      \"status\": \"CS_UPDATING\",\n      \"vizierVersion\": \"string\",\n      \"lastHeartbeatNs\": 2375,\n      \"numNodes\": 7259,\n      \"numInstrumentedNodes\": 9410,\n      \"prettyClusterName\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09da499f-256b-4beb-9b1c-61ce976d164e",
+              "name": "Unauthorized - invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3268,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3767a5ba-8d3e-4a92-8ba7-031f7f7d5ae9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3268,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef87fc40-436e-422b-86dd-5224df85bcd1",
+          "name": "Pixie Get cluster details",
+          "request": {
+            "name": "Pixie Get cluster details",
+            "description": {
+              "content": "Returns detailed information about a specific cluster, including its connection status, Vizier version, and last heartbeat time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "clusters",
+                ":cluster_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "cluster_id",
+                  "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ffcb4d3a-2cfd-450a-955a-cc68dd0a22db",
+              "name": "Cluster details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"60ddd919-0925-b36c-2462-f779429a8b76\",\n  \"clusterName\": \"string\",\n  \"clusterUID\": \"string\",\n  \"clusterVersion\": \"string\",\n  \"status\": \"CS_UNHEALTHY\",\n  \"vizierVersion\": \"string\",\n  \"lastHeartbeatNs\": 8790,\n  \"numNodes\": 8723,\n  \"numInstrumentedNodes\": 7342,\n  \"prettyClusterName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f7608e3-45d7-4d56-b3d9-eb2c2b3f4cfe",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dfb8201b-be04-4e9f-b882-bcd05c1b206c",
+              "name": "Cluster not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "clusters",
+                    ":cluster_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "cluster_id",
+                      "description": "(Required) Unique identifier of the Pixie-monitored Kubernetes cluster."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "pixie-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3268,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://work.withpixie.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "pixie-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "41f57d1d-3041-49b6-9286-c9ed849ea105",
+    "name": "Pixie Clusters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.\n\nContact Support:\n Name: Pixie Community",
+      "type": "text/plain"
+    }
+  }
+}
