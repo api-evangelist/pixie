@@ -4,6 +4,19 @@ description: >-
   Pixie is a Kubernetes observability platform that uses eBPF to automatically collect telemetry data including
   full-body application requests, resource and network metrics, and application profiles without manual instrumentation.
 type: Index
+deliveryModel:
+  model: self-hosted
+  license: Apache-2.0
+  open_source: true
+  commercial: false
+  callable_host: true
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -131,6 +144,16 @@ apis:
   - type: Client Libraries
     url: https://docs.px.dev/reference/api/
 common:
+  - type: IssueTracker
+    url: https://github.com/pixie-io/pixie/issues
+  - type: Releases
+    url: https://github.com/pixie-io/pixie/releases
+  - type: SecurityPolicy
+    url: https://github.com/pixie-io/pixie/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/pixie-io/pixie/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/pixie-io/pixie/blob/main/CONTRIBUTING.md
   - type: License
     name: Apache-2.0
     url: https://github.com/pixie-io/pixie/blob/main/LICENSE
