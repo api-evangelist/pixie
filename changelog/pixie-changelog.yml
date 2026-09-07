@@ -1,0 +1,36 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/pixie-io/pixie/releases
+scheme: >-
+  Component-scoped git tags. Vizier (in-cluster agent) is released as
+  release/vizier/vX.Y.Z and Pixie Cloud as release/cloud/vX.Y.Z, tagged
+  independently. Client libraries (pxapi.go, pxapi) are versioned v0.x.
+current:
+  vizier: v0.14.16 (pre-release train)
+  cloud: v0.1.9
+entries:
+- component: vizier
+  version: v0.14.16-pre-HEAD.40
+  date: '2026-07-13'
+  type: pre-release
+  highlights: Vizier v0.14.16 pre-release build train.
+- component: vizier
+  version: v0.14.16-pre-ddelnano-fix-vizier-dns-parser-crash.39
+  date: '2026-04-03'
+  type: fix
+  highlights: Fix a Vizier DNS parser crash.
+- component: vizier
+  version: v0.14.16-pre-ddelnano-vizier-v0-14-16-hotfix.41
+  date: '2026-03-31'
+  type: fix
+  highlights: Vizier v0.14.16 hotfix.
+- component: vizier
+  version: v0.14.15
+  date: '2025-01-24'
+  type: release
+  highlights: Vizier v0.14.15 stable release.
+- component: cloud
+  version: v0.1.9
+  date: '2025-01-24'
+  type: release
+  highlights: Pixie Cloud v0.1.9 stable release.

@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.px.dev/reference/api/
+packages:
+- language: go
+  registry: pkg.go.dev
+  name: px.dev/pxapi
+  url: https://pkg.go.dev/px.dev/pxapi
+  install: go get px.dev/pxapi
+  official: true
+  description: >-
+    First-party Go client library for the Pixie API. Wraps the Cloud and
+    Vizier gRPC services, handling API-key auth, cluster connection, and
+    streaming PxL script execution results. Versioned v0.x (pre-1.0).
+- language: python
+  registry: pypi
+  name: pxapi
+  version: 0.9.1
+  url: https://pypi.org/project/pxapi/
+  install: pip install pxapi
+  official: true
+  description: >-
+    First-party Python client library for the Pixie API (import pxapi). Creates
+    a Client from an API token, lists healthy clusters, and runs PxL scripts via
+    a ScriptExecutor. Versioned v0.x (pre-1.0).
+- language: cli
+  registry: homebrew
+  name: pixie
+  url: https://github.com/pixie-io/pixie
+  install: brew install pixie
+  official: true
+  description: The px command-line interface (binary catalogued in cli/pixie-labs-cli.yml).
+- language: docker
+  registry: dockerhub
+  name: pixielabs/px
+  url: https://hub.docker.com/r/pixielabs/px
+  install: docker run -i --rm -v ${HOME}/.pixie:/root/.pixie pixielabs/px
+  official: true
+  description: Docker image packaging the px CLI.

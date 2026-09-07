@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Pixie Clusters Scripts API
   description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.
@@ -64,6 +64,88 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ResultTable:
+      type: object
+      description: A single tabular result set from a PxL script execution.
+      properties:
+        name:
+          type: string
+          description: Name of the result table, set by the first argument to px.display().
+        relation:
+          $ref: '#/components/schemas/Relation'
+        data:
+          type: array
+          description: Rows of data in the result table.
+          items:
+            $ref: '#/components/schemas/RowBatch'
+    Column:
+      type: object
+      description: A column definition in a result table.
+      properties:
+        columnName:
+          type: string
+          description: Name of the column.
+        columnType:
+          type: string
+          description: Data type of the column.
+          enum:
+          - BOOLEAN
+          - INT64
+          - UINT128
+          - FLOAT64
+          - STRING
+          - TIME64NS
+          - DURATION64NS
+          - JSONOBJECT
+          - UNKNOWN
+        columnDesc:
+          type: string
+          description: Human-readable description of the column's contents.
+        columnSemanticType:
+          type: string
+          description: Semantic type hint for rendering and interpretation, such as ST_HTTP_RESP_STATUS for HTTP status codes.
+    ErrorResponse:
+      type: object
+      description: Standard error response from the Pixie API.
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        details:
+          type: array
+          description: Additional error details.
+          items:
+            type: object
+    ExecuteScriptRequest:
+      type: object
+      description: Request to execute a PxL script on a target cluster.
+      required:
+      - cluster_id
+      - pxl_script
+      properties:
+        cluster_id:
+          type: string
+          format: uuid
+          description: Unique identifier of the cluster to run the script against.
+        pxl_script:
+          type: string
+          description: PxL script source code to execute. PxL is a Python-dialect DSL for querying Pixie telemetry data.
+          example: 'import px
+
+            df = px.DataFrame(table=''http_events'', start_time=''-5m'')
+
+            px.display(df)'
+        func_name:
+          type: string
+          description: Name of a specific function within the PxL script to invoke. If omitted, the script is executed as a module-level script.
+        script_args:
+          type: object
+          description: Key-value arguments to pass to the PxL script function. Values must be strings.
+          additionalProperties:
+            type: string
     ColumnData:
       type: object
       description: Data values for a single column in a row batch.
@@ -117,6 +199,21 @@ components:
                   low:
                     type: integer
                     format: int64
+    RowBatch:
+      type: object
+      description: A batch of rows in a result table.
+      properties:
+        numRows:
+          type: integer
+          description: Number of rows in this batch.
+        eos:
+          type: boolean
+          description: If true, this is the last batch for this table.
+        cols:
+          type: array
+          description: Column data arrays in the same order as the relation's columns.
+          items:
+            $ref: '#/components/schemas/ColumnData'
     ScriptStatus:
       type: object
       description: Status of a script execution.
@@ -146,6 +243,15 @@ components:
                   message:
                     type: string
                     description: Error message.
+    Relation:
+      type: object
+      description: Schema describing the columns of a result table.
+      properties:
+        columns:
+          type: array
+          description: Column definitions for the result table.
+          items:
+            $ref: '#/components/schemas/Column'
     ExecuteScriptResponse:
       type: object
       description: Response containing the results of a PxL script execution.
@@ -157,112 +263,6 @@ components:
           description: Tabular result sets returned by the script. Each table corresponds to a px.display() call in the PxL script.
           items:
             $ref: '#/components/schemas/ResultTable'
-    Relation:
-      type: object
-      description: Schema describing the columns of a result table.
-      properties:
-        columns:
-          type: array
-          description: Column definitions for the result table.
-          items:
-            $ref: '#/components/schemas/Column'
-    Column:
-      type: object
-      description: A column definition in a result table.
-      properties:
-        columnName:
-          type: string
-          description: Name of the column.
-        columnType:
-          type: string
-          description: Data type of the column.
-          enum:
-          - BOOLEAN
-          - INT64
-          - UINT128
-          - FLOAT64
-          - STRING
-          - TIME64NS
-          - DURATION64NS
-          - JSONOBJECT
-          - UNKNOWN
-        columnDesc:
-          type: string
-          description: Human-readable description of the column's contents.
-        columnSemanticType:
-          type: string
-          description: Semantic type hint for rendering and interpretation, such as ST_HTTP_RESP_STATUS for HTTP status codes.
-    ResultTable:
-      type: object
-      description: A single tabular result set from a PxL script execution.
-      properties:
-        name:
-          type: string
-          description: Name of the result table, set by the first argument to px.display().
-        relation:
-          $ref: '#/components/schemas/Relation'
-        data:
-          type: array
-          description: Rows of data in the result table.
-          items:
-            $ref: '#/components/schemas/RowBatch'
-    ExecuteScriptRequest:
-      type: object
-      description: Request to execute a PxL script on a target cluster.
-      required:
-      - cluster_id
-      - pxl_script
-      properties:
-        cluster_id:
-          type: string
-          format: uuid
-          description: Unique identifier of the cluster to run the script against.
-        pxl_script:
-          type: string
-          description: PxL script source code to execute. PxL is a Python-dialect DSL for querying Pixie telemetry data.
-          example: 'import px
-
-            df = px.DataFrame(table=''http_events'', start_time=''-5m'')
-
-            px.display(df)'
-        func_name:
-          type: string
-          description: Name of a specific function within the PxL script to invoke. If omitted, the script is executed as a module-level script.
-        script_args:
-          type: object
-          description: Key-value arguments to pass to the PxL script function. Values must be strings.
-          additionalProperties:
-            type: string
-    RowBatch:
-      type: object
-      description: A batch of rows in a result table.
-      properties:
-        numRows:
-          type: integer
-          description: Number of rows in this batch.
-        eos:
-          type: boolean
-          description: If true, this is the last batch for this table.
-        cols:
-          type: array
-          description: Column data arrays in the same order as the relation's columns.
-          items:
-            $ref: '#/components/schemas/ColumnData'
-    ErrorResponse:
-      type: object
-      description: Standard error response from the Pixie API.
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-        details:
-          type: array
-          description: Additional error details.
-          items:
-            type: object
   securitySchemes:
     apiKeyAuth:
       type: apiKey

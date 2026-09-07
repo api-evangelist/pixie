@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Pixie Clusters API
   description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.
@@ -114,15 +114,6 @@ components:
         prettyClusterName:
           type: string
           description: Display-friendly name for the cluster.
-    ClusterListResponse:
-      type: object
-      description: Response containing a list of clusters connected to Pixie Cloud.
-      properties:
-        clusters:
-          type: array
-          description: List of cluster objects.
-          items:
-            $ref: '#/components/schemas/Cluster'
     ErrorResponse:
       type: object
       description: Standard error response from the Pixie API.
@@ -138,6 +129,15 @@ components:
           description: Additional error details.
           items:
             type: object
+    ClusterListResponse:
+      type: object
+      description: Response containing a list of clusters connected to Pixie Cloud.
+      properties:
+        clusters:
+          type: array
+          description: List of cluster objects.
+          items:
+            $ref: '#/components/schemas/Cluster'
   parameters:
     cluster_id:
       name: cluster_id

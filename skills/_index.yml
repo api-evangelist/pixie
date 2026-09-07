@@ -1,0 +1,11 @@
+generated: '2026-07-20'
+method: generated
+source: grpc/pixie-labs-vizierapi.proto, grpc/pixie-labs-cloudapi.proto
+skills:
+- file: pixie-labs-run-pxl-script.md
+  name: Run a PxL script against a Pixie cluster
+  api: grpc/pixie-labs-vizierapi.proto
+  operations:
+  - GetClusterInfo
+  - HealthCheck
+  - ExecuteScript

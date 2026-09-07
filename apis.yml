@@ -145,6 +145,30 @@ apis:
   - type: Client Libraries
     url: https://docs.px.dev/reference/api/
 common:
+  - type: DeveloperPortal
+    url: https://docs.px.dev
+  - type: APIReference
+    url: https://docs.px.dev/reference/api/overview/
+  - type: Support
+    url: https://px.dev/community/
+  - type: Packages
+    url: packages/pixie-packages.yml
+  - type: SDKs
+    url: packages/pixie-packages.yml
+  - type: CLI
+    url: cli/pixie-cli.yml
+  - type: Conventions
+    url: conventions/pixie-conventions.yml
+  - type: ChangeLog
+    url: changelog/pixie-changelog.yml
+  - type: Conformance
+    url: conformance/pixie-conformance.yml
+  - type: WellKnown
+    url: well-known/pixie-well-known.yml
+  - type: LLMsTxt
+    url: llms/pixie-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
   - type: IssueTracker
     url: https://github.com/pixie-io/pixie/issues
   - type: Releases

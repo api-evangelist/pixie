@@ -1,0 +1,51 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.px.dev/reference/api/overview/
+transport:
+  protocol: gRPC
+  note: >-
+    Pixie exposes a gRPC API only (no REST/OpenAPI). Two services: Pixie Cloud
+    (cluster discovery, key/artifact/plugin management) and Pixie Vizier (PxL
+    script execution). Client libraries (Go, Python) wrap the transport.
+authentication:
+  style: api-key
+  detail: >-
+    Opaque px-api- key passed to the client and sent on the gRPC connection;
+    see authentication/pixie-labs-authentication.yml.
+query_model:
+  language: PxL
+  detail: >-
+    Data is queried by submitting PxL (Pixie Language, a Pandas/dataframe-style
+    scripting language) scripts via the Vizier ExecuteScript RPC. Results stream
+    back as table metadata followed by row batches.
+streaming:
+  supported: true
+  detail: >-
+    ExecuteScript, HealthCheck, DebugLog, and DebugPods RPCs return server
+    streaming responses; results are consumed as they arrive per table.
+idempotency:
+  supported: false
+  note: >-
+    No documented idempotency-key mechanism. The primary data-plane operation
+    (ExecuteScript) is a read/query over live cluster telemetry; not applicable.
+pagination:
+  supported: false
+  note: >-
+    Results are delivered as streamed row batches per table rather than paged
+    request/response; row-batch chunking is handled by the client library.
+versioning:
+  scheme: library-semver
+  detail: >-
+    Client libraries are v0.x (breaking changes possible pre-1.0). The proto
+    package is pl.api.vizierpb / px.cloudapi. Vizier and Cloud components are
+    versioned/released independently via GitHub tags (release/vizier/*,
+    release/cloud/*).
+error_model:
+  detail: >-
+    gRPC status codes plus a Status message embedded in ExecuteScriptResponse
+    (code, message, error_details). See errors surfaced in
+    grpc/pixie-labs-vizierapi.proto (Status, ErrorDetails).
+cross_reference:
+  authentication: authentication/pixie-labs-authentication.yml
+  changelog: changelog/pixie-labs-changelog.yml
+  packages: packages/pixie-labs-packages.yml

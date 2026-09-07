@@ -1,0 +1,46 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.px.dev/installing-pixie/install-schemes/cli/
+name: px
+description: >-
+  The Pixie command-line interface for deploying Pixie to Kubernetes clusters,
+  authenticating, managing API/deploy keys, and running PxL scripts against live
+  clusters from the terminal.
+install:
+- method: bash
+  command: bash -c "$(curl -fsSL https://withpixie.ai/install.sh)"
+- method: homebrew
+  command: brew install pixie
+- method: debian
+  command: dpkg -i pixie-px.x86_64.deb
+- method: rpm
+  command: rpm -i pixie-px.x86_64.rpm
+- method: docker
+  command: docker run -i --rm -v ${HOME}/.pixie:/root/.pixie pixielabs/px
+commands:
+- name: auth
+  summary: Authenticate the CLI with Pixie Cloud.
+- name: deploy
+  summary: Deploy Pixie (Vizier) to a Kubernetes cluster.
+- name: run
+  summary: Execute a PxL script against a cluster and print results.
+- name: live
+  summary: Launch the interactive live debugging / views terminal UI.
+- name: script
+  summary: List and manage community and custom PxL scripts.
+- name: get
+  summary: Retrieve cluster, pem, viziers, and other resource information.
+- name: delete
+  summary: Remove a Pixie deployment from a cluster.
+- name: update
+  summary: Update the CLI and/or the deployed Vizier.
+- name: api-key
+  summary: >-
+    Create/list/delete Pixie API keys (opaque, px-api- prefix) used to
+    authenticate to the gRPC API from client libraries.
+- name: deploy-key
+  summary: Create/list/delete deploy keys used to register new clusters.
+- name: demo
+  summary: Deploy a demo application to a cluster.
+- name: collect-logs
+  summary: Bundle Pixie component logs for debugging/support.

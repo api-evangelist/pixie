@@ -1,0 +1,28 @@
+# Pixie
+
+> Pixie is an open-source, Kubernetes-native application observability and debugging platform built by Pixie Labs (acquired by New Relic, 2020) and now a CNCF sandbox project. It uses dynamic eBPF probes to auto-instrument workloads and capture metrics, events, full-body traces, and logs in seconds without code changes, querying data in-cluster with PxL scripts. The API is gRPC (Pixie Cloud + Pixie Vizier) with first-party Go and Python clients and the px CLI.
+
+Note: pixielabs.ai no longer resolves; the project lives at px.dev under the pixie-io GitHub org. Authentication uses an opaque API key (px-api- prefix). Client libraries are v0.x (pre-1.0).
+
+## API
+- [Pixie API overview](https://docs.px.dev/reference/api/overview/): gRPC API — Cloud (cluster discovery/management) + Vizier (ExecuteScript PxL execution)
+- [API quick start](https://docs.px.dev/using-pixie/api-quick-start/): create an API key, connect a client, run a PxL script
+
+## Specs
+- [Pixie Vizier API proto](grpc/pixie-labs-vizierapi.proto): VizierService (ExecuteScript, HealthCheck, GenerateOTelScript), VizierDebugService
+- [Pixie Cloud API proto](grpc/pixie-labs-cloudapi.proto): VizierClusterInfo, APIKeyManager, ScriptMgr, PluginService, and more
+
+## Docs
+- [Documentation](https://docs.px.dev)
+- [Admin: API keys](https://docs.px.dev/reference/admin/api-keys/)
+- [CLI reference](https://docs.px.dev/installing-pixie/install-schemes/cli/)
+- [Blog](https://blog.px.dev)
+
+## SDKs & Tools
+- [Go client (px.dev/pxapi)](https://pkg.go.dev/px.dev/pxapi): `go get px.dev/pxapi`
+- [Python client (pxapi)](https://pypi.org/project/pxapi/): `pip install pxapi`
+- [px CLI](https://github.com/pixie-io/pixie): `brew install pixie`
+
+## Repos
+- [GitHub organization](https://github.com/pixie-io)
+- [pixie-io/pixie](https://github.com/pixie-io/pixie): core platform (Apache-2.0)

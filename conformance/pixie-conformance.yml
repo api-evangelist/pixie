@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: derived
+source: grpc/pixie-labs-vizierapi.proto, grpc/pixie-labs-cloudapi.proto, https://docs.px.dev
+standards:
+- id: grpc
+  conforms: true
+  evidence: API defined as protobuf gRPC services (VizierService, cloud services).
+- id: protobuf3
+  conforms: true
+  evidence: proto3 syntax in vizierapi.proto and cloudapi.proto.
+- id: oauth2
+  conforms: false
+  evidence: Authentication is opaque API key, not OAuth2.
+- id: openid-connect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: gRPC status model, not HTTP application/problem+json.
+- id: opentelemetry
+  conforms: true
+  evidence: >-
+    Vizier can generate and export OpenTelemetry via GenerateOTelScript RPC;
+    org maintains opentelemetry-go-instrumentation.
+- id: cncf-sandbox
+  conforms: true
+  evidence: Pixie is a CNCF sandbox project (https://www.cncf.io/projects/pixie/).
