@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Pixie Clusters Health API
+  title: Pixie Health API
   description: The Pixie API provides programmatic access to the Pixie Kubernetes observability platform. It enables listing and managing clusters, executing PxL scripts to query telemetry data collected via eBPF, and retrieving results including full-body application requests, resource metrics, and network data without requiring manual instrumentation.
   version: '0.1'
   contact:
