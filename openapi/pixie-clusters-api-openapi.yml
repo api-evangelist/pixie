@@ -70,15 +70,21 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ClusterListResponse:
+    ErrorResponse:
       type: object
-      description: Response containing a list of clusters connected to Pixie Cloud.
+      description: Standard error response from the Pixie API.
       properties:
-        clusters:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        details:
           type: array
-          description: List of cluster objects.
+          description: Additional error details.
           items:
-            $ref: '#/components/schemas/Cluster'
+            type: object
     Cluster:
       type: object
       description: A Kubernetes cluster connected to Pixie Cloud with a deployed Vizier agent collecting eBPF telemetry data.
@@ -123,21 +129,15 @@ components:
         prettyClusterName:
           type: string
           description: Display-friendly name for the cluster.
-    ErrorResponse:
+    ClusterListResponse:
       type: object
-      description: Standard error response from the Pixie API.
+      description: Response containing a list of clusters connected to Pixie Cloud.
       properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-        details:
+        clusters:
           type: array
-          description: Additional error details.
+          description: List of cluster objects.
           items:
-            type: object
+            $ref: '#/components/schemas/Cluster'
   parameters:
     cluster_id:
       name: cluster_id
