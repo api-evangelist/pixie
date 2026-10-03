@@ -91,6 +91,125 @@ components:
           description: Key-value arguments to pass to the PxL script function. Values must be strings.
           additionalProperties:
             type: string
+    RowBatch:
+      type: object
+      description: A batch of rows in a result table.
+      properties:
+        numRows:
+          type: integer
+          description: Number of rows in this batch.
+        eos:
+          type: boolean
+          description: If true, this is the last batch for this table.
+        cols:
+          type: array
+          description: Column data arrays in the same order as the relation's columns.
+          items:
+            $ref: '#/components/schemas/ColumnData'
+    ExecuteScriptResponse:
+      type: object
+      description: Response containing the results of a PxL script execution.
+      properties:
+        status:
+          $ref: '#/components/schemas/ScriptStatus'
+        tables:
+          type: array
+          description: Tabular result sets returned by the script. Each table corresponds to a px.display() call in the PxL script.
+          items:
+            $ref: '#/components/schemas/ResultTable'
+    ScriptStatus:
+      type: object
+      description: Status of a script execution.
+      properties:
+        code:
+          type: integer
+          description: Status code. 0 indicates success; non-zero values indicate errors.
+        message:
+          type: string
+          description: Human-readable status message or error description.
+        errorDetails:
+          type: array
+          description: Detailed error information if the script encountered errors.
+          items:
+            type: object
+            properties:
+              compilerError:
+                type: object
+                description: Compilation error detail for PxL scripts.
+                properties:
+                  line:
+                    type: integer
+                    description: Line number where the error occurred.
+                  column:
+                    type: integer
+                    description: Column number where the error occurred.
+                  message:
+                    type: string
+                    description: Error message.
+    ErrorResponse:
+      type: object
+      description: Standard error response from the Pixie API.
+      properties:
+        code:
+          type: integer
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+        details:
+          type: array
+          description: Additional error details.
+          items:
+            type: object
+    Column:
+      type: object
+      description: A column definition in a result table.
+      properties:
+        columnName:
+          type: string
+          description: Name of the column.
+        columnType:
+          type: string
+          description: Data type of the column.
+          enum:
+          - BOOLEAN
+          - INT64
+          - UINT128
+          - FLOAT64
+          - STRING
+          - TIME64NS
+          - DURATION64NS
+          - JSONOBJECT
+          - UNKNOWN
+        columnDesc:
+          type: string
+          description: Human-readable description of the column's contents.
+        columnSemanticType:
+          type: string
+          description: Semantic type hint for rendering and interpretation, such as ST_HTTP_RESP_STATUS for HTTP status codes.
+    Relation:
+      type: object
+      description: Schema describing the columns of a result table.
+      properties:
+        columns:
+          type: array
+          description: Column definitions for the result table.
+          items:
+            $ref: '#/components/schemas/Column'
+    ResultTable:
+      type: object
+      description: A single tabular result set from a PxL script execution.
+      properties:
+        name:
+          type: string
+          description: Name of the result table, set by the first argument to px.display().
+        relation:
+          $ref: '#/components/schemas/Relation'
+        data:
+          type: array
+          description: Rows of data in the result table.
+          items:
+            $ref: '#/components/schemas/RowBatch'
     ColumnData:
       type: object
       description: Data values for a single column in a row batch.
@@ -144,125 +263,6 @@ components:
                   low:
                     type: integer
                     format: int64
-    ExecuteScriptResponse:
-      type: object
-      description: Response containing the results of a PxL script execution.
-      properties:
-        status:
-          $ref: '#/components/schemas/ScriptStatus'
-        tables:
-          type: array
-          description: Tabular result sets returned by the script. Each table corresponds to a px.display() call in the PxL script.
-          items:
-            $ref: '#/components/schemas/ResultTable'
-    ErrorResponse:
-      type: object
-      description: Standard error response from the Pixie API.
-      properties:
-        code:
-          type: integer
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-        details:
-          type: array
-          description: Additional error details.
-          items:
-            type: object
-    ScriptStatus:
-      type: object
-      description: Status of a script execution.
-      properties:
-        code:
-          type: integer
-          description: Status code. 0 indicates success; non-zero values indicate errors.
-        message:
-          type: string
-          description: Human-readable status message or error description.
-        errorDetails:
-          type: array
-          description: Detailed error information if the script encountered errors.
-          items:
-            type: object
-            properties:
-              compilerError:
-                type: object
-                description: Compilation error detail for PxL scripts.
-                properties:
-                  line:
-                    type: integer
-                    description: Line number where the error occurred.
-                  column:
-                    type: integer
-                    description: Column number where the error occurred.
-                  message:
-                    type: string
-                    description: Error message.
-    Column:
-      type: object
-      description: A column definition in a result table.
-      properties:
-        columnName:
-          type: string
-          description: Name of the column.
-        columnType:
-          type: string
-          description: Data type of the column.
-          enum:
-          - BOOLEAN
-          - INT64
-          - UINT128
-          - FLOAT64
-          - STRING
-          - TIME64NS
-          - DURATION64NS
-          - JSONOBJECT
-          - UNKNOWN
-        columnDesc:
-          type: string
-          description: Human-readable description of the column's contents.
-        columnSemanticType:
-          type: string
-          description: Semantic type hint for rendering and interpretation, such as ST_HTTP_RESP_STATUS for HTTP status codes.
-    Relation:
-      type: object
-      description: Schema describing the columns of a result table.
-      properties:
-        columns:
-          type: array
-          description: Column definitions for the result table.
-          items:
-            $ref: '#/components/schemas/Column'
-    ResultTable:
-      type: object
-      description: A single tabular result set from a PxL script execution.
-      properties:
-        name:
-          type: string
-          description: Name of the result table, set by the first argument to px.display().
-        relation:
-          $ref: '#/components/schemas/Relation'
-        data:
-          type: array
-          description: Rows of data in the result table.
-          items:
-            $ref: '#/components/schemas/RowBatch'
-    RowBatch:
-      type: object
-      description: A batch of rows in a result table.
-      properties:
-        numRows:
-          type: integer
-          description: Number of rows in this batch.
-        eos:
-          type: boolean
-          description: If true, this is the last batch for this table.
-        cols:
-          type: array
-          description: Column data arrays in the same order as the relation's columns.
-          items:
-            $ref: '#/components/schemas/ColumnData'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
