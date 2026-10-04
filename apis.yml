@@ -145,6 +145,9 @@ apis:
   - type: Client Libraries
     url: https://docs.px.dev/reference/api/
 common:
+  - type: CapabilityMap
+    url: capabilities/pixie-capability-edges.yml
+    name: Pixie Business Capability Map
   - type: DeveloperPortal
     url: https://docs.px.dev
   - type: APIReference
