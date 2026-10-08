@@ -145,6 +145,12 @@ apis:
   - type: Client Libraries
     url: https://docs.px.dev/reference/api/
 common:
+  - type: Plans
+    url: plans/pixie-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/pixie-rate-limits.yml
+  - type: FinOps
+    url: finops/pixie-finops.yml
   - type: CapabilityMap
     url: capabilities/pixie-capability-edges.yml
     name: Pixie Business Capability Map
