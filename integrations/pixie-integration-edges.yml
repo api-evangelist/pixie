@@ -1,0 +1,26 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- grafana-com/integrations/grafana-com-integration-edges.yml
+source:
+- grafana-com/integrations/grafana-com-integration-edges.yml
+edges:
+- partner_name: Grafana (own)
+  partner: grafana-com
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://grafana.com/grafana/plugins/pixie-pixie-datasource/
+  mirror_of: grafana-com/integrations/grafana-com-integration-edges.yml
+  apps:
+  - Pixie Grafana Datasource Plugin
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Data Source
+  badges:
+  - signature:community
