@@ -70,6 +70,15 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ClusterListResponse:
+      type: object
+      description: Response containing a list of clusters connected to Pixie Cloud.
+      properties:
+        clusters:
+          type: array
+          description: List of cluster objects.
+          items:
+            $ref: '#/components/schemas/Cluster'
     ErrorResponse:
       type: object
       description: Standard error response from the Pixie API.
@@ -129,15 +138,6 @@ components:
         prettyClusterName:
           type: string
           description: Display-friendly name for the cluster.
-    ClusterListResponse:
-      type: object
-      description: Response containing a list of clusters connected to Pixie Cloud.
-      properties:
-        clusters:
-          type: array
-          description: List of cluster objects.
-          items:
-            $ref: '#/components/schemas/Cluster'
   parameters:
     cluster_id:
       name: cluster_id
