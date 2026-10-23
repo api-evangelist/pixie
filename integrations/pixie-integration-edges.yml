@@ -7,6 +7,7 @@ checked:
 - https://github.com/cncf/landscape
 - digital-ocean/integrations/digital-ocean-integration-edges.yml
 - https://www.bestpractices.dev/en/projects.json
+- https://www.bestpractices.dev/en/projects.json?page=N
 source:
 - grafana-com/integrations/grafana-com-integration-edges.yml
 edges:
@@ -81,7 +82,7 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: Monitoring
-- partner_name: OpenSSF Best Practices Badge
+- partner_name: OpenSSF Best Practices Badge (bestpractices.dev)
   partner: null
   partner_match: register
   type: register
@@ -89,31 +90,31 @@ edges:
   relationship: standard-participant
   direction: partner-built
   evidence: https://www.bestpractices.dev/en/projects/5027
-  category: OpenSSF Best Practices badge (open-source project security conformance)
+  category: OpenSSF Best Practices badge (open-source project security practices)
   contract_reference:
-    register: OpenSSF Best Practices badge projects (bestpractices.dev/en/projects.json, paged)
-    standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
+    register: OpenSSF Best Practices Badge projects (www.bestpractices.dev/en/projects.json)
+    standard: OpenSSF Best Practices Badge criteria (passing / silver / gold)
     spec_file: null
-    role: badge-holder
+    role: badged-project-owner
     registered_name: pixie
-    matched_by: github-org
-    matched_on: pixie-io
+    matched_domain: px.dev
+    matched_by: domain
     certified_products:
     - product: open-source project
       product_type: open-source project
-      standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
-      lapsed: false
+      standard: OpenSSF Best Practices Badge criteria (passing / silver / gold)
       partner_tier: silver
-      projects:
-      - name: pixie
-        id: 5027
-        url: https://www.bestpractices.dev/en/projects/5027
-        badge_level: silver
-    signal_note: 'certified_products = ONE entry (product type: open-source project) with the highest CURRENT badge
-      level in partner_tier; a provider whose projects only lost the badge is lapsed: true; project names are context,
-      never counted; in_progress entries are not conformance'
+      lapsed: false
+      badge_date: '2023-05-31'
+    badged_projects:
+    - name: pixie
+      id: 5027
+      badge: silver
+      url: https://www.bestpractices.dev/en/projects/5027
+    signal_note: 'certified_products = ONE entry per provider (product type open-source project): highest current
+      OpenSSF Best Practices badge level in partner_tier, earliest date at that level; lapsed: true when every linked
+      project lost its badge. badged_projects is context, never counted'
     detected_by: sweep-openssf-best-practices-badges.py
     detected: '2026-10-22'
-    identity_source: apis.yml GitHubOrganization pointer (provider's own declaration)
   detected_by: sweep-openssf-best-practices-badges.py
   first_seen: '2026-10-22'
