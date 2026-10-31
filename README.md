@@ -1,4 +1,4 @@
-# Pixie (pixie)
+# Pixie
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,107 +66,146 @@
 
 Pixie is a Kubernetes observability platform that uses eBPF to automatically collect telemetry data including full-body application requests, resource and network metrics, and application profiles without manual instrumentation.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/pixie/refs/heads/main/apis.yml)
+**Areas:** eBPF · Kubernetes · Monitoring · Observability
 
-## Scope
+## Pixie on APIs.io
 
-- **Type:** Index
+Everything profiled for Pixie is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/pixie/](https://apis.io/providers/pixie/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- eBPF
-- Kubernetes
-- Monitoring
-- Observability
+- [Pixie PxL Script API](https://apis.io/apis/pixie/pixie-pxl-api/) — Python-dialect domain-specific language and API for querying and analyzing telemetry data collected by Pixie within a Kubernetes cluster. PxL scripts allow…
+- [Pixie Plugin System API](https://apis.io/apis/pixie/pixie-plugin-api/) — Plugin API that allows configuring PxL scripts to export observability data from Pixie at regularly scheduled intervals to external systems. Supports…
+- [Pixie Clusters API](https://apis.io/apis/pixie/pixie-clusters-api/) — Operations for listing and inspecting Pixie-instrumented Kubernetes clusters connected to the Pixie Cloud.
+- [Pixie Health API](https://apis.io/apis/pixie/pixie-health-api/) — Health and status endpoints for the Pixie service.
+- [Pixie Scripts API](https://apis.io/apis/pixie/pixie-scripts-api/) — Operations for executing PxL scripts against a cluster and retrieving telemetry query results.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Pixie API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Kubernetes observability platform using eBPF for automatic telemetry collection without manual instrumentation.
+- [Pixie Agentic Access](https://apis.io/agentic-access/pixie/pixie-agentic-access/)
 
-- **Human URL:** [https://docs.px.dev/](https://docs.px.dev/)
+#### JSON Schema (2)
 
-#### Tags
+The data models the API reads and writes.
 
-- Kubernetes
-- Observability
+- [Pixie Plugin Configuration](https://apis.io/schemas/pixie/pixie-plugin/)
+- [Pixie PxL Script](https://apis.io/schemas/pixie/pixie-pxl-script/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://docs.px.dev/)
-- [Getting Started](https://docs.px.dev/installing-pixie/)
-- [Reference](https://docs.px.dev/reference/api/overview/)
-- [Client  Libraries](https://docs.px.dev/reference/api/)
-- [OpenAPI](openapi/pixie-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Linked-data contexts for the provider's vocabulary.
 
-### Pixie PxL Script API
+- [Pixie Context](https://apis.io/jsonld/pixie/pixie-context/)
 
-Python-dialect domain-specific language and API for querying and analyzing telemetry data collected by Pixie within a Kubernetes cluster. PxL scripts allow developers to filter, aggregate, and visualize metrics, traces, and full-body request data collected via eBPF.
+#### Collections (4)
 
-- **Human URL:** [https://docs.px.dev/reference/pxl/](https://docs.px.dev/reference/pxl/)
+Postman and Open Collection request collections.
 
-#### Tags
+- [Pixie API](https://apis.io/collections/pixie/open-pixie/)
+- [Pixie Clusters API](https://apis.io/collections/pixie/open-pixie-clusters-api/)
+- [Pixie Clusters Health API](https://apis.io/collections/pixie/open-pixie-health-api/)
+- [Pixie Clusters Scripts API](https://apis.io/collections/pixie/open-pixie-scripts-api/)
 
-- eBPF
-- Kubernetes
-- Metrics
-- Observability
-- Scripting
+#### Governance rules (1)
 
-#### Properties
+Spectral rulesets for the provider's contracts.
 
-- [Documentation](https://docs.px.dev/reference/pxl/)
-- [Reference](https://docs.px.dev/reference/pxl/)
-- [JSON Schema](json-schema/pixie-pxl-script-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Pixie — jsonschema rules](https://apis.io/rules/pixie/pixie-jsonschema-spectral-rules/)
 
-### Pixie Plugin System API
+#### Security (2)
 
-Plugin API that allows configuring PxL scripts to export observability data from Pixie at regularly scheduled intervals to external systems. Supports integrations including a Grafana datasource plugin for visualizing Pixie data in Grafana dashboards.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.px.dev/reference/plugins/plugin-system/](https://docs.px.dev/reference/plugins/plugin-system/)
+- [Pixie Authentication](https://apis.io/security/pixie/pixie-authentication/)
+- [Pixie Domain Security](https://apis.io/security/pixie/pixie-domain-security/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Grafana
-- Integrations
-- Kubernetes
-- Observability
-- Plugins
+Published plans, tiers and prices.
 
-#### Properties
+- [Pixie Plans Pricing](https://apis.io/plans/pixie/pixie-plans-pricing/)
 
-- [Documentation](https://docs.px.dev/reference/plugins/plugin-system/)
-- [Reference](https://docs.px.dev/reference/plugins/grafana/)
-- [JSON Schema](json-schema/pixie-plugin-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/pixie.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/pixie.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-## Common Properties
+Published request limits.
 
-- [LinkedIn](https://www.linkedin.com/company/pixieai)
+- [Pixie Rate Limits](https://apis.io/rate-limits/pixie/pixie-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Pixie Finops](https://apis.io/finops/pixie/pixie-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://px.dev/)
-- [JSON-LD](json-ld/pixie-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/pixie-pxl-script-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/pixie-plugin-schema.json) — [JSON Schema](https://json-schema.org/specification)
 - [Documentation](https://docs.px.dev/)
-- [Getting Started](https://docs.px.dev/installing-pixie/)
-- [GitHub Organization](https://github.com/pixie-io)
-- [GitHub Repository](https://github.com/pixie-io/pixie)
+- [Getting started](https://docs.px.dev/installing-pixie/)
+- [API reference](https://docs.px.dev/reference/api/overview/)
+- [Support](https://px.dev/community/)
 - [Blog](https://blog.px.dev/)
-- [Community](https://px.dev/community/)
-- [Slack](https://slackin.px.dev/)
+- [GitHub](https://github.com/pixie-io)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 47.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 55.4 |
+| Contract quality | 58.3 |
+| Contract governance | 14.4 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 5.3 |
+
+**Agent readiness 26.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/pixie/](https://apis.io/providers/pixie/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Pixie: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/pixie/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
